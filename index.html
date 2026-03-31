@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sanmukh Mewada — Java Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0a0a0a; --bg2: #111111; --bg3: #1a1a1a;
+    --text: #f0f0f0; --muted: #888; --border: rgba(255,255,255,0.08);
+    --tag-bg: rgba(255,255,255,0.06);
+    --ff-head: 'Syne', sans-serif; --ff-body: 'DM Sans', sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: var(--ff-body); font-size: 16px; line-height: 1.7; overflow-x: hidden; }
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 4rem;
+    background: rgba(10,10,10,0.88); backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { font-family: var(--ff-head); font-size: 1.15rem; font-weight: 700; letter-spacing: -0.02em; }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a { text-decoration: none; color: var(--muted); font-size: 0.88rem; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--text); }
+  .nav-cta {
+    background: var(--text); color: var(--bg);
+    padding: 0.5rem 1.3rem; border-radius: 100px;
+    font-size: 0.84rem; font-weight: 500; text-decoration: none; transition: opacity 0.2s;
+  }
+  .nav-cta:hover { opacity: 0.85; }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh; display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 10rem 4rem 5rem; position: relative; overflow: hidden;
+  }
+  .hero-grid {
+    position: absolute; inset: 0; z-index: 0;
+    background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse at 60% 50%, black 30%, transparent 80%);
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1px solid var(--border); border-radius: 100px;
+    padding: 0.35rem 1rem; font-size: 0.8rem; color: var(--muted);
+    margin-bottom: 2rem; position: relative; z-index: 1;
+  }
+  .hero-dot { width: 7px; height: 7px; border-radius: 50%; background: #4ade80; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+  .hero-name {
+    font-family: var(--ff-head); font-size: clamp(3.2rem, 8vw, 7.5rem);
+    font-weight: 800; line-height: 1; letter-spacing: -0.04em;
+    color: var(--text); position: relative; z-index: 1; margin-bottom: 1.5rem;
+  }
+  .hero-name span { color: var(--muted); }
+  .hero-role {
+    font-family: var(--ff-head); font-size: clamp(1rem, 2vw, 1.4rem);
+    font-weight: 600; color: var(--muted); position: relative; z-index: 1;
+    margin-bottom: 1rem; letter-spacing: 0.02em;
+  }
+  .hero-desc { max-width: 540px; color: var(--muted); font-size: 1.05rem; position: relative; z-index: 1; margin-bottom: 2.5rem; }
+  .hero-btns { display: flex; gap: 1rem; position: relative; z-index: 1; flex-wrap: wrap; align-items: center; }
+  .btn-primary {
+    background: var(--text); color: var(--bg);
+    padding: 0.75rem 2rem; border-radius: 100px; font-size: 0.95rem;
+    font-weight: 500; text-decoration: none; transition: opacity 0.2s; font-family: var(--ff-body);
+  }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-outline {
+    border: 1px solid var(--border); color: var(--muted);
+    padding: 0.75rem 2rem; border-radius: 100px; font-size: 0.95rem;
+    font-weight: 400; text-decoration: none; transition: all 0.2s; font-family: var(--ff-body);
+  }
+  .btn-outline:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
+  .btn-resume {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1px solid rgba(255,255,255,0.15); color: var(--text);
+    padding: 0.75rem 2rem; border-radius: 100px; font-size: 0.95rem;
+    font-weight: 500; text-decoration: none; transition: all 0.2s; font-family: var(--ff-body);
+    background: rgba(255,255,255,0.05);
+  }
+  .btn-resume:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.3); }
+  .btn-resume svg { width: 16px; height: 16px; }
+
+  /* MARQUEE */
+  .marquee-wrap { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 1rem 0; overflow: hidden; background: var(--bg2); }
+  .marquee { display: flex; gap: 3rem; animation: scroll 22s linear infinite; white-space: nowrap; }
+  .marquee span { font-size: 0.82rem; color: var(--muted); letter-spacing: 0.05em; text-transform: uppercase; }
+  .marquee span::before { content: "◆ "; color: #333; }
+  @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+  section { padding: 6rem 4rem; }
+  .section-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--muted); margin-bottom: 1rem; }
+  .section-title { font-family: var(--ff-head); font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 1.5rem; }
+  .divider { border: none; border-top: 1px solid var(--border); margin: 0 4rem; }
+
+  /* ABOUT */
+  #about { background: var(--bg2); }
+  .about-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 5rem; align-items: start; }
+  .about-text { color: var(--muted); font-size: 1rem; line-height: 1.85; }
+  .about-text strong { color: var(--text); }
+  .edu-block { margin-top: 2.5rem; }
+  .edu-item {
+    border-left: 2px solid var(--border); padding-left: 1.25rem; margin-bottom: 1.5rem; position: relative;
+  }
+  .edu-item::before { content: ''; position: absolute; left: -5px; top: 6px; width: 8px; height: 8px; border-radius: 50%; background: var(--muted); }
+  .edu-degree { font-weight: 500; color: var(--text); font-size: 0.95rem; }
+  .edu-school { color: var(--muted); font-size: 0.85rem; margin-top: 2px; }
+  .edu-year { color: #555; font-size: 0.8rem; margin-top: 2px; }
+  .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+  .stat-card { background: var(--bg3); border: 1px solid var(--border); border-radius: 12px; padding: 1.4rem; }
+  .stat-num { font-family: var(--ff-head); font-size: 2rem; font-weight: 800; color: var(--text); }
+  .stat-label { font-size: 0.82rem; color: var(--muted); margin-top: 4px; }
+
+  /* EXPERIENCE */
+  #experience { background: var(--bg); }
+  .exp-list { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1.5rem; }
+  .exp-card {
+    background: var(--bg2); border: 1px solid var(--border); border-radius: 16px; padding: 2rem;
+    transition: border-color 0.2s;
+  }
+  .exp-card:hover { border-color: rgba(255,255,255,0.16); }
+  .exp-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+  .exp-title { font-family: var(--ff-head); font-size: 1.1rem; font-weight: 700; }
+  .exp-company { color: var(--muted); font-size: 0.9rem; margin-top: 2px; }
+  .exp-meta { text-align: right; }
+  .exp-type { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); background: var(--tag-bg); border: 1px solid var(--border); border-radius: 100px; padding: 0.25rem 0.8rem; display: inline-block; margin-bottom: 4px; }
+  .exp-date { font-size: 0.8rem; color: #555; }
+  .exp-points { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+  .exp-points li { font-size: 0.9rem; color: var(--muted); padding-left: 1.2rem; position: relative; }
+  .exp-points li::before { content: '→'; position: absolute; left: 0; color: #444; }
+
+  /* SKILLS */
+  #skills { background: var(--bg2); }
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem; margin-top: 2.5rem; }
+  .skill-card { background: var(--bg3); border: 1px solid var(--border); border-radius: 16px; padding: 1.75rem; transition: border-color 0.2s; }
+  .skill-card:hover { border-color: rgba(255,255,255,0.16); }
+  .skill-icon { font-size: 1.4rem; margin-bottom: 0.85rem; }
+  .skill-title { font-family: var(--ff-head); font-size: 1rem; font-weight: 600; margin-bottom: 0.85rem; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+  .tag { background: var(--tag-bg); color: var(--muted); border: 1px solid var(--border); border-radius: 100px; padding: 0.28rem 0.8rem; font-size: 0.76rem; }
+
+  /* PROJECTS */
+  #projects { background: var(--bg); }
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-top: 2.5rem; }
+  .project-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; transition: transform 0.2s, border-color 0.2s; }
+  .project-card:hover { transform: translateY(-4px); border-color: rgba(255,255,255,0.15); }
+  .project-thumb { height: 180px; display: flex; align-items: center; justify-content: center; font-size: 3rem; position: relative; }
+  .project-thumb .overlay { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,255,255,0.04), transparent); }
+  .p-hospital { background: #0e0a1a; }
+  .p-clock { background: #0a120e; }
+  .project-body { padding: 1.5rem; }
+  .project-cat { font-size: 0.73rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 0.4rem; }
+  .project-name { font-family: var(--ff-head); font-size: 1.15rem; font-weight: 700; margin-bottom: 0.6rem; line-height: 1.3; }
+  .project-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.65; margin-bottom: 1.1rem; }
+
+  /* CERTIFICATIONS */
+  #certifications { background: var(--bg2); }
+  .cert-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem; margin-top: 2.5rem; }
+  .cert-card { background: var(--bg3); border: 1px solid var(--border); border-radius: 14px; padding: 1.5rem; transition: border-color 0.2s; }
+  .cert-card:hover { border-color: rgba(255,255,255,0.15); }
+  .cert-icon { font-size: 1.3rem; margin-bottom: 0.75rem; }
+  .cert-title { font-size: 0.93rem; font-weight: 500; color: var(--text); margin-bottom: 0.4rem; line-height: 1.4; }
+  .cert-issuer { font-size: 0.8rem; color: var(--muted); }
+
+  /* RESUME DOWNLOAD SECTION */
+  #resume-dl { background: var(--bg); }
+  .resume-banner {
+    background: var(--bg2); border: 1px solid var(--border); border-radius: 20px;
+    padding: 3rem 3.5rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap;
+  }
+  .resume-banner-text h2 { font-family: var(--ff-head); font-size: 1.8rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .resume-banner-text p { color: var(--muted); font-size: 0.95rem; }
+  .btn-dl {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--text); color: var(--bg);
+    padding: 0.9rem 2.2rem; border-radius: 100px; font-size: 0.95rem;
+    font-weight: 500; text-decoration: none; transition: opacity 0.2s; font-family: var(--ff-body); flex-shrink: 0;
+  }
+  .btn-dl:hover { opacity: 0.85; }
+
+  /* CONTACT */
+  #contact { background: var(--bg2); }
+  .contact-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+  .contact-detail { display: flex; align-items: center; gap: 12px; margin-bottom: 1rem; font-size: 0.88rem; color: var(--muted); }
+  .contact-detail a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .contact-detail a:hover { color: var(--text); }
+  .contact-icon { width: 34px; height: 34px; border: 1px solid var(--border); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; flex-shrink: 0; }
+  .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  label { font-size: 0.8rem; color: var(--muted); }
+  input, textarea, select { background: var(--bg3); border: 1px solid var(--border); color: var(--text); border-radius: 10px; padding: 0.72rem 1rem; font-family: var(--ff-body); font-size: 0.88rem; outline: none; transition: border-color 0.2s; }
+  input:focus, textarea:focus, select:focus { border-color: rgba(255,255,255,0.22); }
+  select option { background: var(--bg3); }
+  textarea { resize: vertical; min-height: 120px; }
+  .btn-submit { background: var(--text); color: var(--bg); border: none; border-radius: 100px; padding: 0.82rem 2rem; font-family: var(--ff-head); font-size: 0.92rem; font-weight: 600; cursor: pointer; transition: opacity 0.2s; align-self: flex-start; }
+  .btn-submit:hover { opacity: 0.85; }
+
+  /* FOOTER */
+  footer { border-top: 1px solid var(--border); padding: 2rem 4rem; display: flex; align-items: center; justify-content: space-between; font-size: 0.8rem; color: var(--muted); }
+  .footer-links { display: flex; gap: 2rem; }
+  .footer-links a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--text); }
+
+  .fade-in { opacity: 0; transform: translateY(22px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.5rem; }
+    #hero { padding: 8rem 1.5rem 4rem; }
+    .about-grid, .contact-wrap { grid-template-columns: 1fr; gap: 2.5rem; }
+    .form-row { grid-template-columns: 1fr; }
+    .divider { margin: 0 1.5rem; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+    .resume-banner { flex-direction: column; text-align: center; }
+    .exp-header { flex-direction: column; }
+    .exp-meta { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Sanmukh.dev</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="resume.pdf" download="Sanmukh_Mewada_Resume.pdf" class="nav-cta">Download CV</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-badge fade-in">
+    <span class="hero-dot"></span>
+    Available for Opportunities
+  </div>
+  <h1 class="hero-name fade-in">Sanmukh<br /><span>Mewada</span></h1>
+  <p class="hero-role fade-in">Java Developer &amp; Web Developer</p>
+  <p class="hero-desc fade-in">
+    B.Tech IT student at Oriental College of Technology, Bhopal. Building scalable backend systems with Java, Spring Boot, and REST APIs — along with clean, responsive frontends.
+  </p>
+  <div class="hero-btns fade-in">
+    <a href="#projects" class="btn-primary">View Projects</a>
+    <a href="#contact" class="btn-outline">Get in Touch</a>
+    <a href="resume.pdf" download="Sanmukh_Mewada_Resume.pdf" class="btn-resume">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Download Resume
+    </a>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee">
+    <span>Core Java</span><span>Spring Boot</span><span>MySQL</span>
+    <span>JDBC</span><span>HTML</span><span>CSS</span><span>JavaScript</span>
+    <span>Git</span><span>DSA</span><span>OOP</span><span>REST API</span><span>DBMS</span>
+    <span>Core Java</span><span>Spring Boot</span><span>MySQL</span>
+    <span>JDBC</span><span>HTML</span><span>CSS</span><span>JavaScript</span>
+    <span>Git</span><span>DSA</span><span>OOP</span><span>REST API</span><span>DBMS</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="fade-in">
+      <p class="section-label">About Me</p>
+      <h2 class="section-title">Java Developer from Bhopal, India</h2>
+      <p class="about-text">
+        Hi, I'm <strong>Sanmukh Mewada</strong> — a B.Tech Information Technology student at Oriental College of Technology, Bhopal (2022–2026), ranked among the <strong>top 10% of my batch</strong>.
+        <br /><br />
+        I specialize in <strong>Java backend development</strong> using Spring Framework, MySQL, and JDBC. I also build responsive frontends using HTML, CSS, and JavaScript. I'm passionate about writing clean, maintainable code and solving real-world problems through technology.
+      </p>
+      <div class="edu-block">
+        <div class="edu-item">
+          <div class="edu-degree">B.Tech — Information Technology</div>
+          <div class="edu-school">Oriental College of Technology, Bhopal</div>
+          <div class="edu-year">2022 – 2026 · Top 10% of batch</div>
+        </div>
+        <div class="edu-item">
+          <div class="edu-degree">Higher Secondary (12th)</div>
+          <div class="edu-school">Martinet Convent HS School, Ashta Sehore (MP)</div>
+          <div class="edu-year">2022</div>
+        </div>
+        <div class="edu-item">
+          <div class="edu-degree">Higher School (10th)</div>
+          <div class="edu-school">Martinet Convent HS School, Ashta Sehore (MP)</div>
+          <div class="edu-year">2020</div>
+        </div>
+      </div>
+    </div>
+    <div class="fade-in">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-num">2+</div>
+          <div class="stat-label">Years of Coding Experience</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">2</div>
+          <div class="stat-label">Internships Completed</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">4+</div>
+          <div class="stat-label">Certifications Earned</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">Top 10%</div>
+          <div class="stat-label">Academic Rank in Batch</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <p class="section-label fade-in">Work Experience</p>
+  <h2 class="section-title fade-in">Internships</h2>
+  <div class="exp-list">
+    <div class="exp-card fade-in">
+      <div class="exp-header">
+        <div>
+          <div class="exp-title">Virtual Intern — Web Development</div>
+          <div class="exp-company">CODESOFT · Remote</div>
+        </div>
+        <div class="exp-meta">
+          <div class="exp-type">Remote Internship</div>
+          <div class="exp-date">Dec 2024 – Jan 2025</div>
+        </div>
+      </div>
+      <ul class="exp-points">
+        <li>Developed responsive web applications using HTML, CSS, and JavaScript with cross-browser compatibility.</li>
+        <li>Implemented modern web design principles and best practices for visually appealing user interfaces.</li>
+        <li>Collaborated with team members to deliver projects within deadlines while maintaining code quality.</li>
+        <li>Gained hands-on experience in frontend workflows, debugging techniques, and version control with Git.</li>
+      </ul>
+    </div>
+    <div class="exp-card fade-in">
+      <div class="exp-header">
+        <div>
+          <div class="exp-title">Web Designing Intern</div>
+          <div class="exp-company">Ypsilon IT Solutions Pvt. Ltd. · Bhopal</div>
+        </div>
+        <div class="exp-meta">
+          <div class="exp-type">On-Site Internship</div>
+          <div class="exp-date">July 2023 – Aug 2023</div>
+        </div>
+      </div>
+      <ul class="exp-points">
+        <li>Designed and developed web interfaces using various industry-standard web design tools and technologies.</li>
+        <li>Learned best practices for creating responsive and user-friendly web layouts.</li>
+        <li>Worked on real-world projects that enhanced practical understanding of web development processes.</li>
+        <li>Successfully completed the internship program with hands-on training in web design fundamentals.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- SKILLS -->
+<section id="skills">
+  <p class="section-label fade-in">What I Know</p>
+  <h2 class="section-title fade-in">Technical Skills</h2>
+  <div class="skills-grid">
+    <div class="skill-card fade-in">
+      <div class="skill-icon">☕</div>
+      <div class="skill-title">Languages</div>
+      <div class="skill-tags">
+        <span class="tag">Core Java</span><span class="tag">Spring Boot</span>
+        <span class="tag">HTML</span><span class="tag">CSS</span>
+        <span class="tag">JavaScript</span><span class="tag">SQL</span>
+      </div>
+    </div>
+    <div class="skill-card fade-in">
+      <div class="skill-icon">🌿</div>
+      <div class="skill-title">Frameworks & Technologies</div>
+      <div class="skill-tags">
+        <span class="tag">Spring Framework</span><span class="tag">MySQL</span>
+        <span class="tag">JDBC</span><span class="tag">Hibernate</span>
+        <span class="tag">Git</span><span class="tag">REST API</span>
+      </div>
+    </div>
+    <div class="skill-card fade-in">
+      <div class="skill-icon">🧠</div>
+      <div class="skill-title">Core Competencies</div>
+      <div class="skill-tags">
+        <span class="tag">Data Structures</span><span class="tag">Algorithms</span>
+        <span class="tag">OOP</span><span class="tag">DBMS</span>
+        <span class="tag">Problem Solving</span>
+      </div>
+    </div>
+    <div class="skill-card fade-in">
+      <div class="skill-icon">🚀</div>
+      <div class="skill-title">Other Skills</div>
+      <div class="skill-tags">
+        <span class="tag">Web Development</span><span class="tag">Database Management</span>
+        <span class="tag">Responsive Design</span><span class="tag">Debugging</span>
+        <span class="tag">Version Control</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- PROJECTS -->
+<section id="projects">
+  <p class="section-label fade-in">My Work</p>
+  <h2 class="section-title fade-in">Featured Projects</h2>
+  <div class="projects-grid">
+    <div class="project-card fade-in">
+      <div class="project-thumb p-hospital">
+        <div class="overlay"></div>
+        <span style="position:relative;z-index:1;">🏥</span>
+      </div>
+      <div class="project-body">
+        <p class="project-cat">Java · Spring · MySQL</p>
+        <h3 class="project-name">Hospital Management System</h3>
+        <p class="project-desc">A comprehensive hospital management system built with Java Spring Framework and MySQL. Manages patient records, doctor appointments, medical history, and administrative tasks. Features user authentication, role-based access control, and real-time data sync.</p>
+        <div class="skill-tags">
+          <span class="tag">Java</span><span class="tag">Spring Framework</span><span class="tag">MySQL</span><span class="tag">JDBC</span>
+        </div>
+      </div>
+    </div>
+    <div class="project-card fade-in">
+      <div class="project-thumb p-clock">
+        <div class="overlay"></div>
+        <span style="position:relative;z-index:1;">🕐</span>
+      </div>
+      <div class="project-body">
+        <p class="project-cat">HTML · CSS · JavaScript</p>
+        <h3 class="project-name">Digital Clock</h3>
+        <p class="project-desc">An interactive digital clock application with real-time display and dynamic updates. Demonstrates proficiency in DOM manipulation, JavaScript timing functions, and responsive web design. Features 12/24 hour toggle, date display, and smooth animations.</p>
+        <div class="skill-tags">
+          <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <p class="section-label fade-in">Credentials</p>
+  <h2 class="section-title fade-in">Certifications</h2>
+  <div class="cert-grid">
+    <div class="cert-card fade-in">
+      <div class="cert-icon">📘</div>
+      <div class="cert-title">Java DSA — Master the Fundamentals and Beyond</div>
+      <div class="cert-issuer">Scaler Topics · Data Structures & Algorithms</div>
+    </div>
+    <div class="cert-card fade-in">
+      <div class="cert-icon">🔌</div>
+      <div class="cert-title">APIs in Java: Call and Integrate an API</div>
+      <div class="cert-issuer">Online Certification · RESTful API Integration</div>
+    </div>
+    <div class="cert-card fade-in">
+      <div class="cert-icon">💡</div>
+      <div class="cert-title">Entrepreneurial Management</div>
+      <div class="cert-issuer">Great Learning · Business Strategy & Entrepreneurship</div>
+    </div>
+    <div class="cert-card fade-in">
+      <div class="cert-icon">🎨</div>
+      <div class="cert-title">Web Designing Tools</div>
+      <div class="cert-issuer">Ypsilon IT Solutions Pvt. Ltd. · July–Aug 2023</div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- RESUME DOWNLOAD BANNER -->
+<section id="resume-dl" style="padding: 4rem;">
+  <div class="resume-banner fade-in">
+    <div class="resume-banner-text">
+      <h2>Want my full Resume?</h2>
+      <p>Download my resume to see my complete experience, education, skills, and certifications.</p>
+    </div>
+    <a href="resume.pdf" download="Sanmukh_Mewada_Resume.pdf" class="btn-dl">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Download Resume (PDF)
+    </a>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-wrap">
+    <div class="fade-in">
+      <p class="section-label">Get In Touch</p>
+      <h2 class="section-title">Let's work together</h2>
+      <p style="color:var(--muted);font-size:0.97rem;line-height:1.8;margin-bottom:2rem;">
+        Open to internships, entry-level Java developer roles, and freelance projects. Feel free to reach out!
+      </p>
+      <div class="contact-detail">
+        <div class="contact-icon">📧</div>
+        <a href="mailto:sanmukhmewada@gmail.com">sanmukhmewada@gmail.com</a>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-icon">📱</div>
+        <a href="tel:+917898296390">+91 7898296390</a>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-icon">💼</div>
+        <a href="https://linkedin.com/in/sanmukhmewada05" target="_blank">linkedin.com/in/sanmukhmewada05</a>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-icon">🐙</div>
+        <a href="https://github.com/sanmukhgit05" target="_blank">github.com/sanmukhgit05</a>
+      </div>
+    </div>
+    <div class="fade-in">
+      <div class="contact-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Your Name</label>
+            <input type="text" placeholder="John Doe" />
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" placeholder="john@example.com" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Subject</label>
+          <select>
+            <option>Job / Internship Opportunity</option>
+            <option>Freelance Project</option>
+            <option>Collaboration</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea placeholder="Tell me about your project or opportunity..."></textarea>
+        </div>
+        <button class="btn-submit" onclick="alert('Thanks for reaching out! Please email sanmukhmewada@gmail.com directly or connect a form backend like Formspree.')">Send Message →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2025 Sanmukh Mewada. All rights reserved.</span>
+  <div class="footer-links">
+    <a href="https://github.com/sanmukhgit05" target="_blank">GitHub</a>
+    <a href="https://linkedin.com/in/sanmukhmewada05" target="_blank">LinkedIn</a>
+    <a href="mailto:sanmukhmewada@gmail.com">Email</a>
+    <a href="resume.pdf" download="Sanmukh_Mewada_Resume.pdf">Resume</a>
+  </div>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 70);
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
